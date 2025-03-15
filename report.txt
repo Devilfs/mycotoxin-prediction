@@ -1,0 +1,71 @@
+Project Report: Hyperspectral Data Analysis for DON Concentration Prediction
+
+1. Project Overview:
+
+This project aims to develop a machine learning model to predict Deoxynivalenol (DON) concentration (a mycotoxin) in corn samples using hyperspectral imaging data. The project comprises several Python scripts that handle data processing, model building, training, evaluation, and deployment through a Streamlit web application.
+
+2. File Structure and Functionality:
+
+app.py (Streamlit Application):
+This script creates a user-friendly web interface using Streamlit.
+Users can upload a CSV file containing hyperspectral data.
+The script loads a pre-trained attention model and its weights.
+It processes the uploaded data, scales it using a pre-trained scaler, and makes predictions.
+The predicted DON concentrations are displayed, along with a visualization of the mean scaled hyperspectral data.
+Logging is implemented to track application events and errors.
+It is designed to use the model that is saved as a .keras file, but currently is designed to load weights.
+data_processing.py (Data Preprocessing):
+This script handles the loading and preprocessing of hyperspectral data.
+It loads data from a CSV file, checks for missing values (and imputes them), and separates features (spectral bands) and the target (DON concentration).
+It scales the features using StandardScaler and returns the scaled data, target, and the scaler object.
+It also includes functions for exploratory data analysis (EDA), such as visualizing average spectral reflectance and the distribution of DON levels.
+It contains the ability to save the scaler object.
+evaluation.py (Model Evaluation):
+This script evaluates the performance of the machine learning models.
+It loads and preprocesses the data, splits it into training, validation, and test sets.
+It builds and trains both a baseline MLP model and an attention-based model.
+It calculates evaluation metrics (MAE, RMSE, R²) and plots the predicted vs. actual values for each model.
+It saves the attention model's weights.
+It uses the train_model function to train the models.
+models.py (Model Architecture):
+This script defines the architecture of the machine learning models.
+It includes a function to build a baseline MLP model and a custom AttentionLayer class.
+It also includes a function to build the attention-based model using convolutional layers and the custom attention layer.
+It contains the train_model function.
+It contains a test area, that tests the attention model.
+3. Workflow and Interdependencies:
+
+Data Preprocessing:
+data_processing.py is used to load and preprocess the hyperspectral data, including scaling. The scaler object can be saved.
+Model Training and Evaluation:
+models.py defines the model architectures.
+evaluation.py uses data_processing.py to get the training, validation, and test data.
+evaluation.py uses models.py to build and train the models.
+evaluation.py evaluates the trained models and saves the attention model's weights.
+Web Application Deployment:
+app.py loads the pre-trained attention model and its weights.
+It uses the pre-trained scaler from data_processing.py to scale new data.
+It makes predictions using the loaded model and displays the results.
+4. Key Technologies:
+
+TensorFlow/Keras: For building and training machine learning models.
+Pandas: For data manipulation and analysis.
+NumPy: For numerical computations.
+Scikit-learn: For data preprocessing and evaluation metrics.
+Streamlit: For creating the web application.
+Matplotlib and Seaborn: For data visualization.
+Logging: For tracking events and errors.
+5. Potential Improvements:
+
+Model Saving: Save the entire trained model as a .keras file for easier loading in app.py.
+Scaler Management: Save the scaler separately using pickle or joblib to avoid redundant loading of the training dataset.
+Hyperparameter Tuning and Cross-Validation: Implement these techniques to optimize model performance.
+Error Handling: Add more robust error handling in all scripts.
+Visualization: Enhance visualizations for better insights into data and model performance.
+Modularization: Further modularize the code for better maintainability.
+Input Validation: Add input validation to the streamlit app.
+Consistent Filepaths: ensure all filepaths are consistent.
+Add Random Seeds: add random seeds to all areas that use random numbers, to ensure reproducibility.
+6. Conclusion:
+
+This project provides a functional pipeline for predicting DON concentrations from hyperspectral data.
